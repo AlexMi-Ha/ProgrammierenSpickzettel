@@ -5,9 +5,21 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 import java.util.Scanner;
 
 public class FileReaderExample {
+	
+	public static void ReadWithNio(final String filename) {
+		try {
+			List<String> lines = Files.readAllLines(new File(filename).toPath());
+			lines.forEach(System.out::println);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static void ReadWithFileReader(final String filename) {
 		File file = new File(filename);

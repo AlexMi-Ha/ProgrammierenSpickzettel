@@ -3,13 +3,29 @@ package de.alexmiha.io;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 
 public class FileWriterExample {
+	
+	public static void WriteWithNio(final String filename, final String[] content, final boolean appendMode) {
+	try {
+		if(appendMode)
+			Files.write(new File(filename).toPath(), Arrays.asList(content), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+		else
+			Files.write(new File(filename).toPath(), Arrays.asList(content));
+		
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	}
 
 	
-	public static void WriteWithFileWriter(final String filename, final String content) {
+	public static void WriteWithFileWriter(final String filename, final String content, final boolean appendMode) {
 		File file = new File(filename);
-		try(FileWriter f = new FileWriter(file, true)) {  // FileWriter(FILE, APPEND_MODE<True/False>)   -> AppendMode: an die Datei anhängen oder überschreiben
+		try(FileWriter f = new FileWriter(file, appendMode)) {  // FileWriter(FILE, APPEND_MODE<True/False>)   -> AppendMode: an die Datei anhängen oder überschreiben
 			f.write(content + "\n");
 		} catch (IOException e) {
 			e.printStackTrace();
